@@ -1,9 +1,10 @@
 
 import connectDB from "@/lib/db";
 import { User } from "@/models/user.model";
-import bcrypt from "bcryptjs";
 import { StatusCodes } from "http-status-codes";
 import { NextResponse as res } from "next/server";
+
+
 
 export const POST = async (req) => {
   await connectDB();
@@ -16,9 +17,8 @@ export const POST = async (req) => {
     if (existingUser) {
       return res.json({ message: "User already exists" }, { status: StatusCodes.CONFLICT });
     }
+    const newUser = new User({ fullname, email, password });
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ fullname, email, password: hashedPassword });
     await newUser.save();
 
     return res.json({ message: "User registered successfully" }, { status: StatusCodes.CREATED });
