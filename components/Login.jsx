@@ -13,7 +13,7 @@ const Login = () => {
      try {
       const response=await axios.post('/api/login',values)
        toast.success(response.data.message) 
-      router.push('/')
+      router.push('/admin')
     } catch (error) {
       if(error.response){
         toast.error(error.response.data.message || 'Something went wrong')
