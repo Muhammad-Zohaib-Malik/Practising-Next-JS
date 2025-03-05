@@ -2,6 +2,8 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
+import { Toaster } from "react-hot-toast";
+
 
 
 const menus = [
@@ -32,6 +34,7 @@ const Layout = ({children}) => {
   if(isBlackListed){
     return(
       <div>
+         <Toaster position="top-right" />
         {children}
       </div>
     )

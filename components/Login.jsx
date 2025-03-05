@@ -1,10 +1,24 @@
 "use client";
 import { Button, Card, Form, Input } from "antd";
+import axios from "axios";
 import Link from "next/link"; 
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+
 
 const Login = () => {
-  const handleLogin = (values) => {
-    console.log(values);
+    const router=useRouter()
+  
+  const handleLogin = async(values) => {
+     try {
+      const response=await axios.post('/api/login',values)
+       toast.success(response.data.message) 
+      router.push('/')
+    } catch (error) {
+      if(error.response){
+        toast.error(error.response.data.message || 'Something went wrong')
+      }
+    }
   };
 
   return (
