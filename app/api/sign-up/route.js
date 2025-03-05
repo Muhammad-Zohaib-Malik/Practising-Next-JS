@@ -5,7 +5,6 @@ import { StatusCodes } from "http-status-codes";
 import { NextResponse as res } from "next/server";
 
 
-
 export const POST = async (req) => {
   await connectDB();
   try {

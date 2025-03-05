@@ -38,15 +38,14 @@ export const POST = async (req) => {
       );
     }
 
-    const { accessToken, refreshToken } = await generateAccessAndRefreshToken
-      (user._id);
+    const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id);
 
     // Cookie options
     const options = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // Secure only in production
       sameSite: "Strict",
-      path: "/",
+      maxAge: 15 * 60
     };
 
 
@@ -60,8 +59,8 @@ export const POST = async (req) => {
         },
         { status: StatusCodes.OK }
       );
-    response.cookies.set("accessToken", accessToken, { ...options, maxAge: 15 * 60 });
-    response.cookies.set("refreshToken", refreshToken, { ...options, maxAge: 15 * 60 });
+    response.cookies.set("accessToken", accessToken, options);
+    response.cookies.set("refreshToken", refreshToken, options);
     return response
 
   } catch (error) {
